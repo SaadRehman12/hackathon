@@ -1,13 +1,13 @@
-import  { useState } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <nav className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white h-20">
+      <div className="container mx-auto px-4 h-full flex justify-between items-center">
         {/* Logo */}
-        <div className="text-2xl font-bold">Dev Infinity</div>
+        <div className="text-2xl font-bold">Events</div>
 
         {/* Hamburger Button */}
         <button
@@ -34,7 +34,7 @@ const Navbar = () => {
         <div
           className={`${
             isOpen ? "block" : "hidden"
-          } absolute top-16 left-0 w-full bg-gradient-to-r from-gray-800 via-gray-900 to-black lg:static lg:flex lg:space-x-6 lg:w-auto lg:items-center`}
+          } absolute top-20 left-0 w-full bg-gradient-to-r from-gray-800 via-gray-900 to-black lg:static lg:flex lg:space-x-6 lg:w-auto lg:items-center`}
         >
           <a
             href="#"

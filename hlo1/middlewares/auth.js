@@ -1,34 +1,36 @@
-var jwt = require('jsonwebtoken');
-
-const auth= (req, res, next) => {
-    try{
-        const secretKey = process.env.SECRET_KEY
-
-        if(!req.headers.authorization){
-            return res.json({
-                data: [],
-                status: "error",
-                error: "Login required"
-            })
-        }
-        var decoded = jwt.verify(req.headers.authorization, secretKey);
-
-        if(!decoded){
-            return res.json({
-                data: [],
-                status: "error",
-                error: "Login required"
-            })
-        }
-        req.body.authUser = decoded
-        next()
+const auth = (req, res, next) => {
+    try {
+      const secretKey = process.env.SECRET_KEY;
+  
+      if (!req.headers.authorization) {
+        return res.status(401).json({
+          data: [],
+          status: "error",
+          error: "Login required",
+        });
+      }
+  
+      const token = req.headers.authorization.split(' ')[1]; // Extract token
+      const decoded = jwt.verify(token, secretKey); // Verify token
+  
+      if (!decoded) {
+        return res.status(401).json({
+          data: [],
+          status: "error",
+          error: "Login required",
+        });
+      }
+  
+      req.user = decoded; // Attach decoded token data to request
+      next();
+    } catch (error) {
+      res.status(403).json({
+        data: [],
+        status: "error",
+        error: "Invalid or expired token",
+      });
     }
-    catch(err){
-        req.json({
-            data: [],
-            status: "error",
-            error: err
-        })
-    }
-}
-module.exports = auth
+  };
+  
+  module.exports = auth;
+  

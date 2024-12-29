@@ -1,23 +1,35 @@
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const dotenv = require('dotenv')
-const port = 8000
-const connectDb = require('./config/db')
-const userRouter = require('./routes/userRoutes')
-const productRouter = require('./routes/productRoute')
-const todoRouter = require('./routes/todoRoute')
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const connectDb = require('./config/db');
+const userRouter = require('./routes/userRoutes');
 
-app.use(cors())
-app.use(bodyParser.json())
-dotenv.config()
-connectDb()
-app.use(bodyParser.urlencoded({ extended: true}))
+const todoRouter = require('./routes/todoRoute');
 
-app.use("/auth",userRouter)
-app.use("/product",productRouter)
-app.use("/todo",todoRouter)
+dotenv.config();
+connectDb();
+
+const port = 8000;
+
+const corsOptions = {
+    origin: "*",  // Allow all origins (change in production)
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],  // Ensure Authorization is allowed
+  };
+  
+  
+
+app.use(cors(corsOptions));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use("/auth", userRouter);
+
+app.use("/event", todoRouter);
+
 app.listen(port, () => {
-   console.log(`server is running on port ${port}`);
-})
+    console.log(`Server is running on port ${port}`);
+});

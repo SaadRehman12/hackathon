@@ -1,22 +1,22 @@
+// filepath: /C:/Users/ACS/Desktop/hackathon/hlo1/models/userModel.js
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
     },
     email: {
-        unique :true,
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true
-    },
-    
+    }
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
